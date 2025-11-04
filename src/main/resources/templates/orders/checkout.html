@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+>
+    <head>
+        <title>Thanh toán</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <h2>Xác nhận thanh toán</h2>
+
+            <div class="card">
+                <div class="card-body">
+                    <p>Bạn có chắc muốn đặt hàng?</p>
+                    <form th:action="@{/checkout}" method="post">
+                        <button type="submit" class="btn btn-success">
+                            Xác nhận
+                        </button>
+                        <a href="/products/cart" class="btn btn-secondary"
+                            >Quay lại</a
+                        >
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

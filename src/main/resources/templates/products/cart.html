@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+>
+    <head>
+        <title>Giỏ hàng</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <h2>Giỏ hàng của bạn</h2>
+
+            <div
+                th:if="${cart == null || cart.isEmpty()}"
+                class="alert alert-info"
+            >
+                Giỏ hàng trống!
+            </div>
+
+            <div th:if="${cart != null && !cart.isEmpty()}">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product : ${cartProducts}">
+                            <td th:text="${product.name}">Product</td>
+                            <td th:text="${product.price}">0</td>
+                            <td th:text="${cart.get(product.id)}">1</td>
+                            <td
+                                th:text="${product.price * cart.get(product.id)}"
+                            >
+                                0
+                            </td>
+                            <td>
+                                <form
+                                    th:action="@{/products/cart/remove/{id}(id=${product.id})}"
+                                    method="post"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="btn btn-danger btn-sm"
+                                    >
+                                        Xóa
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-end">
+                    <a href="/checkout" class="btn btn-primary">Thanh toán</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

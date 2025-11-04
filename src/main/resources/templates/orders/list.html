@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+>
+    <head>
+        <title>Đơn hàng của tôi</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <h2>Đơn hàng của tôi</h2>
+
+            <div th:if="${orders.isEmpty()}" class="alert alert-info">
+                Bạn chưa có đơn hàng nào!
+            </div>
+
+            <div th:if="${!orders.isEmpty()}">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Ngày đặt</th>
+                            <th>Số sản phẩm</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="order : ${orders}">
+                            <td th:text="${order.id}">1</td>
+                            <td
+                                th:text="${#dates.format(order.date, 'dd/MM/yyyy HH:mm')}"
+                            >
+                                Date
+                            </td>
+                            <td th:text="${order.orderLines.size()}">0</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-info"
+                                    >Chi tiết</a
+                                >
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

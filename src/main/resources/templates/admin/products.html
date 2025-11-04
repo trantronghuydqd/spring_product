@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+>
+    <head>
+        <title>Quản lý sản phẩm</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <h2>Quản lý sản phẩm</h2>
+
+            <a href="/admin/products/add" class="btn btn-primary mb-3"
+                >Thêm sản phẩm mới</a
+            >
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên</th>
+                        <th>Giá</th>
+                        <th>Danh mục</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.id}">1</td>
+                        <td th:text="${product.name}">Product</td>
+                        <td th:text="${product.price}">0</td>
+                        <td th:text="${product.category.name}">Category</td>
+                        <td>
+                            <span
+                                class="badge"
+                                th:classappend="${product.inStock ? 'bg-success' : 'bg-danger'}"
+                                th:text="${product.inStock ? 'Còn hàng' : 'Hết hàng'}"
+                            ></span>
+                        </td>
+                        <td>
+                            <a
+                                th:href="@{/admin/products/edit/{id}(id=${product.id})}"
+                                class="btn btn-sm btn-warning"
+                                >Sửa</a
+                            >
+                            <form
+                                th:action="@{/admin/products/delete/{id}(id=${product.id})}"
+                                method="post"
+                                class="d-inline"
+                            >
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Bạn có chắc muốn xóa?')"
+                                >
+                                    Xóa
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
