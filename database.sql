@@ -69,10 +69,10 @@ INSERT INTO category (id, name) VALUES
 (3, 'Phụ kiện');
 
 -- Insert Customers
--- Plain text passwords: admin123 and customer123
+-- BCrypt encoded passwords for admin123 and customer123
 INSERT INTO customer (id, name, username, password, customer_since, role) VALUES
-(1, 'Admin User', 'admin', 'admin123', '2024-01-01', 'ADMIN'),
-(2, 'Customer One', 'customer', 'customer123', '2024-01-15', 'CUSTOMER');
+(1, 'Admin User', 'admin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2024-01-01', 'ADMIN'),
+(2, 'Customer One', 'customer', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2024-01-15', 'CUSTOMER');
 
 -- Insert Products
 INSERT INTO product (id, name, price, in_stock, category_id) VALUES
@@ -86,7 +86,9 @@ INSERT INTO product (id, name, price, in_stock, category_id) VALUES
 -- Insert Comments
 INSERT INTO comment (id, text, product_id) VALUES
 (1, 'Sản phẩm rất tốt!', 1),
-(2, 'Giá hợp lý, chất lượng cao', 3);
+(2, 'Giá hợp lý, chất lượng cao', 3),
+(3, 'Máy chạy mượt, pin trâu!', 1),
+(4, 'Giá hơi đắt nhưng xứng đáng', 2);
 
 -- Insert Orders
 INSERT INTO orders (id, date, customer_id) VALUES

@@ -18,6 +18,9 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
     
+    @Autowired
+    private CommentService commentService;
+    
     @GetMapping
     public String listProducts(@RequestParam(required = false) String search, Model model) {
         List<Product> products = search != null ? 
@@ -25,6 +28,24 @@ public class ProductController {
         model.addAttribute("products", products);
         model.addAttribute("categories", categoryService.findAll());
         return "products/list";
+    }
+    
+    @GetMapping("/{id}")
+    public String productDetail(@PathVariable Integer id, Model model) {
+        Product product = productService.findById(id);
+        if (product == null) {
+            return "redirect:/products";
+        }
+        model.addAttribute("product", product);
+        model.addAttribute("comments", commentService.findByProductId(id));
+        return "products/detail";
+    }
+    
+    @PostMapping("/{id}/comment")
+    public String addComment(@PathVariable Integer id, 
+                            @RequestParam String text) {
+        commentService.addComment(id, text);
+        return "redirect:/products/" + id;
     }
     
     @GetMapping("/search")

@@ -18,6 +18,9 @@ public class AdminController {
     @Autowired
     private CategoryService categoryService;
     
+    @Autowired
+    private CommentService commentService;
+    
     @GetMapping("/products")
     public String adminProducts(Model model) {
         model.addAttribute("products", productService.findAll());
@@ -66,5 +69,12 @@ public class AdminController {
     public String deleteProduct(@PathVariable Integer id) {
         productService.deleteById(id);
         return "redirect:/admin/products";
+    }
+    
+    @GetMapping("/products/{id}/comments")
+    public String viewProductComments(@PathVariable Integer id, Model model) {
+        model.addAttribute("product", productService.findById(id));
+        model.addAttribute("comments", commentService.findByProductId(id));
+        return "admin/comments";
     }
 }

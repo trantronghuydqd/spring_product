@@ -35,9 +35,12 @@
                             </td>
                             <td th:text="${order.orderLines.size()}">0</td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-info"
-                                    >Chi tiết</a
+                                <a
+                                    th:href="@{/orders/{id}/details(id=${order.id})}"
+                                    class="btn btn-sm btn-info"
                                 >
+                                    Chi tiết
+                                </a>
                             </td>
                         </tr>
                     </tbody>

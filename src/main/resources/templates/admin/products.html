@@ -41,6 +41,12 @@
                         </td>
                         <td>
                             <a
+                                th:href="@{/admin/products/{id}/comments(id=${product.id})}"
+                                class="btn btn-sm btn-info"
+                            >
+                                Comments
+                            </a>
+                            <a
                                 th:href="@{/admin/products/edit/{id}(id=${product.id})}"
                                 class="btn btn-sm btn-warning"
                                 >Sửa</a

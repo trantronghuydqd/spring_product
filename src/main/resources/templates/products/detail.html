@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout}"
+>
+    <head>
+        <title th:text="${product.name}">Chi tiết sản phẩm</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 th:text="${product.name}">Tên sản phẩm</h2>
+                            <p class="text-muted">
+                                Danh mục:
+                                <span th:text="${product.category.name}"
+                                    >Category</span
+                                >
+                            </p>
+                            <h3 class="text-primary">
+                                <span th:text="${product.price}">0</span> VNĐ
+                            </h3>
+                            <p>
+                                <span
+                                    class="badge"
+                                    th:classappend="${product.inStock ? 'bg-success' : 'bg-danger'}"
+                                    th:text="${product.inStock ? 'Còn hàng' : 'Hết hàng'}"
+                                ></span>
+                            </p>
+                            <form
+                                th:action="@{/products/cart/add/{id}(id=${product.id})}"
+                                method="post"
+                            >
+                                <div
+                                    class="input-group mb-3"
+                                    style="max-width: 300px"
+                                >
+                                    <input
+                                        type="number"
+                                        name="quantity"
+                                        class="form-control"
+                                        value="1"
+                                        min="1"
+                                    />
+                                    <button
+                                        type="submit"
+                                        class="btn btn-success"
+                                        th:disabled="${!product.inStock}"
+                                    >
+                                        Thêm vào giỏ
+                                    </button>
+                                </div>
+                            </form>
+                            <a href="/products" class="btn btn-secondary"
+                                >Quay lại</a
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5>
+                                Bình luận (<span th:text="${comments.size()}"
+                                    >0</span
+                                >)
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Add Comment Form (for everyone) -->
+                            <div class="mb-4">
+                                <form
+                                    th:action="@{/products/{id}/comment(id=${product.id})}"
+                                    method="post"
+                                >
+                                    <div class="mb-3">
+                                        <textarea
+                                            name="text"
+                                            class="form-control"
+                                            rows="3"
+                                            placeholder="Viết bình luận của bạn..."
+                                            required
+                                        ></textarea>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary"
+                                    >
+                                        Gửi bình luận
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Comments List -->
+                            <div
+                                th:if="${comments.isEmpty()}"
+                                class="text-muted"
+                            >
+                                Chưa có bình luận nào.
+                            </div>
+
+                            <div
+                                th:each="comment : ${comments}"
+                                class="border-bottom pb-3 mb-3"
+                            >
+                                <p class="mb-0" th:text="${comment.text}">
+                                    Comment text
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
