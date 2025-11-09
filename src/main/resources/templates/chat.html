@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+>
+    <head>
+        <title>Chat AI Tư vấn</title>
+        <style>
+            .chat-container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .chat-box {
+                height: 500px;
+                overflow-y: auto;
+                border: 1px solid #dee2e6;
+                border-radius: 10px;
+                padding: 20px;
+                background-color: #f8f9fa;
+                margin-bottom: 20px;
+            }
+            .message {
+                margin-bottom: 15px;
+                clear: both;
+            }
+            .message.user {
+                text-align: right;
+            }
+            .message.ai {
+                text-align: left;
+            }
+            .message-bubble {
+                display: inline-block;
+                padding: 10px 15px;
+                border-radius: 15px;
+                max-width: 70%;
+                word-wrap: break-word;
+                white-space: pre-wrap;
+            }
+            .message.user .message-bubble {
+                background-color: #007bff;
+                color: white;
+            }
+            .message.ai .message-bubble {
+                background-color: #28a745;
+                color: white;
+            }
+            .input-form {
+                position: sticky;
+                bottom: 0;
+                background: white;
+                padding: 15px;
+                border: 1px solid #dee2e6;
+                border-radius: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="chat-container">
+                <div
+                    class="d-flex justify-content-between align-items-center mb-3"
+                >
+                    <h2>🤖 Trợ lý AI Tư vấn Sản phẩm</h2>
+                    <div>
+                        <a
+                            href="/chat/clear"
+                            class="btn btn-outline-danger btn-sm me-2"
+                            >🗑️ Xóa Chat</a
+                        >
+                        <a
+                            href="/products"
+                            class="btn btn-outline-secondary btn-sm"
+                            >Quay lại</a
+                        >
+                    </div>
+                </div>
+
+                <div class="chat-box" id="chatBox">
+                    <div
+                        th:each="msg : ${messages}"
+                        th:class="${'message ' + msg.type}"
+                    >
+                        <div class="message-bubble" th:text="${msg.text}">
+                            Message
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-form">
+                    <form th:action="@{/chat/message}" method="post">
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                name="message"
+                                class="form-control"
+                                placeholder="Nhập câu hỏi của bạn..."
+                                required
+                                autofocus
+                            />
+                            <button type="submit" class="btn btn-primary">
+                                Gửi
+                            </button>
+                        </div>
+                        <small class="text-muted mt-2 d-block">
+                            Ví dụ: "Laptop nào tốt cho sinh viên?", "iPhone 15
+                            giá bao nhiêu?", "Tư vấn tai nghe bluetooth"
+                        </small>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <th:block layout:fragment="scripts">
+            <script>
+                // Auto scroll to bottom
+                window.onload = function () {
+                    const chatBox = document.getElementById("chatBox");
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                };
+            </script>
+        </th:block>
+    </body>
+</html>
