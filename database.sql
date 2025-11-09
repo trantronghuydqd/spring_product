@@ -71,8 +71,8 @@ INSERT INTO category (id, name) VALUES
 -- Insert Customers
 -- BCrypt encoded passwords for admin123 and customer123
 INSERT INTO customer (id, name, username, password, customer_since, role) VALUES
-(1, 'Admin User', 'admin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2024-01-01', 'ADMIN'),
-(2, 'Customer One', 'customer', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2024-01-15', 'CUSTOMER');
+-- (1, 'Admin User', 'admin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2024-01-01', 'ADMIN'),
+-- (2, 'Customer One', 'customer', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2024-01-15', 'CUSTOMER');
 
 -- Insert Products
 INSERT INTO product (id, name, price, in_stock, category_id) VALUES
