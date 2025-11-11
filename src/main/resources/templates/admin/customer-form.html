@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+>
+    <head>
+        <title
+            th:text="${customer.id == null ? 'Thêm khách hàng' : 'Sửa khách hàng'}"
+        >
+            Form khách hàng
+        </title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="mb-3">
+                <a href="/admin/customers" class="btn btn-secondary">
+                    ← Quay lại danh sách
+                </a>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4
+                        class="mb-0"
+                        th:text="${customer.id == null ? 'Thêm khách hàng mới' : 'Sửa khách hàng'}"
+                    >
+                        Form
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form
+                        th:action="${customer.id == null ? '/admin/customers/add' : '/admin/customers/edit/' + customer.id}"
+                        th:object="${customer}"
+                        method="post"
+                    >
+                        <div class="mb-3">
+                            <label for="name" class="form-label"
+                                >Tên khách hàng
+                                <span class="text-danger">*</span></label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                th:field="*{name}"
+                                placeholder="Nhập tên đầy đủ"
+                                required
+                            />
+                            <div
+                                class="text-danger"
+                                th:if="${#fields.hasErrors('name')}"
+                                th:errors="*{name}"
+                            ></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label"
+                                >Username
+                                <span class="text-danger">*</span></label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="username"
+                                th:field="*{username}"
+                                placeholder="Nhập username"
+                                required
+                            />
+                            <div
+                                class="text-danger"
+                                th:if="${#fields.hasErrors('username')}"
+                                th:errors="*{username}"
+                            ></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">
+                                Password
+                                <span
+                                    class="text-danger"
+                                    th:if="${customer.id == null}"
+                                    >*</span
+                                >
+                                <small
+                                    class="text-muted"
+                                    th:if="${customer.id != null}"
+                                >
+                                    (Để trống nếu không đổi)
+                                </small>
+                            </label>
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                th:field="*{password}"
+                                placeholder="Nhập password"
+                                th:required="${customer.id == null}"
+                            />
+                            <div
+                                class="text-danger"
+                                th:if="${#fields.hasErrors('password')}"
+                                th:errors="*{password}"
+                            ></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="role" class="form-label"
+                                >Role <span class="text-danger">*</span></label
+                            >
+                            <select
+                                class="form-select"
+                                id="role"
+                                th:field="*{role}"
+                                required
+                            >
+                                <option value="">-- Chọn role --</option>
+                                <option value="CUSTOMER">CUSTOMER</option>
+                                <option value="ADMIN">ADMIN</option>
+                            </select>
+                        </div>
+
+                        <div
+                            class="alert alert-info"
+                            th:if="${customer.id != null && customer.customerSince != null}"
+                        >
+                            <strong>Ngày đăng ký:</strong>
+                            <span
+                                th:text="${#dates.format(customer.customerSince, 'dd/MM/yyyy')}"
+                                >01/01/2024</span
+                            >
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                th:field="*{isActive}"
+                            />
+                            <label class="form-check-label" for="isActive"
+                                >Đang hoạt động</label
+                            >
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <span
+                                    th:text="${customer.id == null ? 'Thêm mới' : 'Cập nhật'}"
+                                    >Lưu</span
+                                >
+                            </button>
+                            <a
+                                href="/admin/customers"
+                                class="btn btn-secondary"
+                            >
+                                Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

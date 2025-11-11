@@ -59,4 +59,37 @@ public class OrderService {
         
         return orders;
     }
+    
+    public List<Order> findAll() {
+        List<Order> orders = orderRepository.findAll();
+        // Load orderLines cho mỗi order
+        for (Order order : orders) {
+            List<OrderLine> orderLines = orderLineRepository.findByOrderId(order.getId());
+            order.setOrderLines(orderLines);
+        }
+        return orders;
+    }
+    
+    public Order findById(Integer id) {
+        Order order = orderRepository.findById(id).orElse(null);
+        if (order != null) {
+            List<OrderLine> orderLines = orderLineRepository.findByOrderId(order.getId());
+            order.setOrderLines(orderLines);
+        }
+        return order;
+    }
+    
+    public void deleteById(Integer id) {
+        orderRepository.deleteById(id);
+    }
+    
+    public long count() {
+        return orderRepository.count();
+    }
+    
+    public double calculateTotal(Order order) {
+        return order.getOrderLines().stream()
+            .mapToDouble(ol -> ol.getPurchasePrice().doubleValue() * ol.getAmount())
+            .sum();
+    }
 }

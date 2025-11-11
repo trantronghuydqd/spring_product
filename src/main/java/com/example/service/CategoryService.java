@@ -12,6 +12,10 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
     
     public List<Category> findAll() {
+        return categoryRepository.findByIsActiveTrue();
+    }
+    
+    public List<Category> findAllIncludingInactive() {
         return categoryRepository.findAll();
     }
     
@@ -20,6 +24,22 @@ public class CategoryService {
     }
     
     public Category save(Category category) {
+        if (category.getIsActive() == null) {
+            category.setIsActive(true);
+        }
         return categoryRepository.save(category);
+    }
+    
+    public void deleteById(Integer id) {
+        // Soft delete: set isActive = false
+        Category category = categoryRepository.findById(id).orElse(null);
+        if (category != null) {
+            category.setIsActive(false);
+            categoryRepository.save(category);
+        }
+    }
+    
+    public long count() {
+        return categoryRepository.count();
     }
 }

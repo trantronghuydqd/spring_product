@@ -9,7 +9,20 @@
     </head>
     <body>
         <div layout:fragment="content">
-            <h2>Quản lý sản phẩm</h2>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Quản lý sản phẩm</h2>
+                <div class="btn-group">
+                    <a href="/admin/categories" class="btn btn-outline-primary">
+                        Danh mục
+                    </a>
+                    <a href="/admin/orders" class="btn btn-outline-primary">
+                        Đơn hàng
+                    </a>
+                    <a href="/admin/customers" class="btn btn-outline-primary">
+                        Khách hàng
+                    </a>
+                </div>
+            </div>
 
             <a href="/admin/products/add" class="btn btn-primary mb-3"
                 >Thêm sản phẩm mới</a
@@ -22,7 +35,8 @@
                         <th>Tên</th>
                         <th>Giá</th>
                         <th>Danh mục</th>
-                        <th>Trạng thái</th>
+                        <th>Kho</th>
+                        <th>Tình trạng</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
@@ -37,6 +51,13 @@
                                 class="badge"
                                 th:classappend="${product.inStock ? 'bg-success' : 'bg-danger'}"
                                 th:text="${product.inStock ? 'Còn hàng' : 'Hết hàng'}"
+                            ></span>
+                        </td>
+                        <td>
+                            <span
+                                class="badge"
+                                th:classappend="${product.isActive ? 'bg-primary' : 'bg-secondary'}"
+                                th:text="${product.isActive ? 'Hoạt động' : 'Ngừng'}"
                             ></span>
                         </td>
                         <td>
@@ -59,7 +80,7 @@
                                 <button
                                     type="submit"
                                     class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Bạn có chắc muốn xóa?')"
+                                    onclick="return confirm('Xóa sản phẩm này (soft delete)?')"
                                 >
                                     Xóa
                                 </button>

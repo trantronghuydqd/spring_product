@@ -12,6 +12,10 @@ public class ProductService {
     private ProductRepository productRepository;
     
     public List<Product> findAll() {
+        return productRepository.findByIsActiveTrue();
+    }
+    
+    public List<Product> findAllIncludingInactive() {
         return productRepository.findAll();
     }
     
@@ -27,10 +31,18 @@ public class ProductService {
     }
     
     public Product save(Product product) {
+        if (product.getIsActive() == null) {
+            product.setIsActive(true);
+        }
         return productRepository.save(product);
     }
     
     public void deleteById(Integer id) {
-        productRepository.deleteById(id);
+        // Soft delete: set isActive = false
+        Product product = productRepository.findById(id).orElse(null);
+        if (product != null) {
+            product.setIsActive(false);
+            productRepository.save(product);
+        }
     }
 }

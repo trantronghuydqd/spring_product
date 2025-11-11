@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+>
+    <head>
+        <title
+            th:text="${category.id == null ? 'Thêm danh mục' : 'Sửa danh mục'}"
+        >
+            Form danh mục
+        </title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="mb-3">
+                <a href="/admin/categories" class="btn btn-secondary">
+                    Quay lại danh sách
+                </a>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4
+                        class="mb-0"
+                        th:text="${category.id == null ? 'Thêm danh mục mới' : 'Sửa danh mục'}"
+                    >
+                        Form
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form
+                        th:action="${category.id == null ? '/admin/categories/add' : '/admin/categories/edit/' + category.id}"
+                        th:object="${category}"
+                        method="post"
+                    >
+                        <div class="mb-3">
+                            <label for="name" class="form-label"
+                                >Tên danh mục
+                                <span class="text-danger">*</span></label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                th:field="*{name}"
+                                placeholder="Nhập tên danh mục"
+                                required
+                            />
+                            <div
+                                class="text-danger"
+                                th:if="${#fields.hasErrors('name')}"
+                                th:errors="*{name}"
+                            ></div>
+                        </div>
+
+                        <div
+                            class="alert alert-info"
+                            th:if="${category.id != null && category.products != null}"
+                        >
+                            <strong>Số sản phẩm hiện tại:</strong>
+                            <span
+                                th:text="${category.products.size()} + ' sản phẩm'"
+                                >0 sản phẩm</span
+                            >
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                th:field="*{isActive}"
+                            />
+                            <label class="form-check-label" for="isActive"
+                                >Đang hoạt động</label
+                            >
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <span
+                                    th:text="${category.id == null ? 'Thêm mới' : 'Cập nhật'}"
+                                    >Lưu</span
+                                >
+                            </button>
+                            <a
+                                href="/admin/categories"
+                                class="btn btn-secondary"
+                            >
+                                Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

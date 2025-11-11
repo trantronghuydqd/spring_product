@@ -26,6 +26,9 @@ public class Product {
     
     private Boolean inStock;
     
+    @Column(nullable = false)
+    private Boolean isActive = true;
+    
     @ManyToOne
     @JoinColumn(name = "category_id")
     @NotNull(message = "Category không được để trống")

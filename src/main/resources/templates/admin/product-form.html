@@ -70,6 +70,17 @@
                     >
                 </div>
 
+                <div class="mb-3 form-check">
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        th:field="*{isActive}"
+                    />
+                    <label class="form-check-label" for="isActive"
+                        >Đang hoạt động</label
+                    >
+                </div>
+
                 <button type="submit" class="btn btn-primary">Lưu</button>
                 <a href="/admin/products" class="btn btn-secondary">Hủy</a>
             </form>

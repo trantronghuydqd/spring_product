@@ -29,6 +29,9 @@ public class Customer {
     
     private String role; // ADMIN, CUSTOMER
     
+    @Column(nullable = false)
+    private Boolean isActive = true;
+    
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 }

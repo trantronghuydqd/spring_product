@@ -17,6 +17,9 @@ public class Category {
     @NotBlank(message = "Tên category không được để trống")
     private String name;
     
+    @Column(nullable = false)
+    private Boolean isActive = true;
+    
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 }

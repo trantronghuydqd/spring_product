@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"
+>
+    <head>
+        <title>Quản lý danh mục</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Quản lý danh mục</h2>
+                <div>
+                    <a
+                        href="/admin/categories/add"
+                        class="btn btn-primary me-2"
+                    >
+                        Thêm danh mục
+                    </a>
+                    <a href="/admin/products" class="btn btn-secondary">
+                        Quản lý sản phẩm
+                    </a>
+                </div>
+            </div>
+
+            <div class="alert alert-info" th:if="${categories.isEmpty()}">
+                Chưa có danh mục nào
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên danh mục</th>
+                            <th>Số sản phẩm</th>
+                            <th>Tình trạng</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="category : ${categories}">
+                            <td th:text="${category.id}">1</td>
+                            <td th:text="${category.name}">Category Name</td>
+                            <td>
+                                <span
+                                    class="badge bg-info"
+                                    th:text="${category.products != null ? category.products.size() : 0} + ' SP'"
+                                >
+                                    0 SP
+                                </span>
+                            </td>
+                            <td>
+                                <span
+                                    class="badge"
+                                    th:classappend="${category.isActive ? 'bg-primary' : 'bg-secondary'}"
+                                    th:text="${category.isActive ? 'Hoạt động' : 'Ngừng'}"
+                                ></span>
+                            </td>
+                            <td>
+                                <a
+                                    th:href="@{/admin/categories/edit/{id}(id=${category.id})}"
+                                    class="btn btn-sm btn-warning"
+                                    title="Sửa"
+                                >
+                                    Sửa
+                                </a>
+                                <form
+                                    th:action="@{/admin/categories/delete/{id}(id=${category.id})}"
+                                    method="post"
+                                    class="d-inline"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Xóa danh mục này (soft delete)?')"
+                                        title="Xóa"
+                                    >
+                                        Xóa
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
