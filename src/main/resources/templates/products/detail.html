@@ -22,7 +22,11 @@
                                 >
                             </p>
                             <h3 class="text-primary">
-                                <span th:text="${product.price}">0</span> VNĐ
+                                <span
+                                    th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"
+                                    >0</span
+                                >
+                                VNĐ
                             </h3>
                             <p>
                                 <span

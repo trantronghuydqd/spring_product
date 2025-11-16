@@ -40,7 +40,10 @@
                             </h5>
                             <p class="card-text">
                                 <strong>Giá:</strong>
-                                <span th:text="${product.price}">0</span>
+                                <span
+                                    th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"
+                                    >0</span
+                                >
                                 VNĐ<br />
                                 <strong>Danh mục:</strong>
                                 <span th:text="${product.category.name}"

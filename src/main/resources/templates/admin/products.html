@@ -44,7 +44,11 @@
                     <tr th:each="product : ${products}">
                         <td th:text="${product.id}">1</td>
                         <td th:text="${product.name}">Product</td>
-                        <td th:text="${product.price}">0</td>
+                        <td
+                            th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"
+                        >
+                            0
+                        </td>
                         <td th:text="${product.category.name}">Category</td>
                         <td>
                             <span

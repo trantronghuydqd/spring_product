@@ -32,10 +32,14 @@
                     <tbody>
                         <tr th:each="product : ${cartProducts}">
                             <td th:text="${product.name}">Product</td>
-                            <td th:text="${product.price}">0</td>
+                            <td
+                                th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"
+                            >
+                                0
+                            </td>
                             <td th:text="${cart.get(product.id)}">1</td>
                             <td
-                                th:text="${product.price * cart.get(product.id)}"
+                                th:text="${#numbers.formatDecimal(product.price * cart.get(product.id), 0, 'COMMA', 0, 'POINT')}"
                             >
                                 0
                             </td>

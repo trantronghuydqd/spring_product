@@ -64,9 +64,9 @@ CREATE TABLE order_line (
 
 -- Insert Categories
 INSERT INTO category (id, name) VALUES
-(1, 'Điện thoại'),
-(2, 'Laptop'),
-(3, 'Phụ kiện');
+(1, 'Thuốc bảo vệ thực vật'),
+(2, 'Phân bón'),
+(3, 'Tạp hóa');
 
 -- Insert Customers
 -- BCrypt encoded passwords for admin123 and customer123
@@ -76,19 +76,19 @@ INSERT INTO customer (id, name, username, password, customer_since, role) VALUES
 
 -- Insert Products
 INSERT INTO product (id, name, price, in_stock, category_id) VALUES
-(1, 'iPhone 15', 25000000, true, 1),
-(2, 'Samsung Galaxy S24', 22000000, true, 1),
-(3, 'MacBook Pro M3', 45000000, true, 2),
-(4, 'Dell XPS 15', 35000000, true, 2),
-(5, 'Tai nghe AirPods Pro', 6000000, true, 3),
-(6, 'Chuột Logitech MX Master', 2500000, false, 3);
+(1, 'Thuốc trừ sâu Bayer 500ml', 150000, true, 1),
+(2, 'Thuốc diệt cỏ Glyphosate 1L', 180000, true, 1),
+(3, 'Phân NPK 16-16-8 (50kg)', 450000, true, 2),
+(4, 'Phân DAP (50kg)', 550000, true, 2),
+(5, 'Dầu ăn Neptune 5L', 200000, true, 3),
+(6, 'Nước mắm Nam Ngư 500ml', 35000, false, 3);
 
 -- Insert Comments
 INSERT INTO comment (id, text, product_id) VALUES
-(1, 'Sản phẩm rất tốt!', 1),
-(2, 'Giá hợp lý, chất lượng cao', 3),
-(3, 'Máy chạy mượt, pin trâu!', 1),
-(4, 'Giá hơi đắt nhưng xứng đáng', 2);
+(1, 'Thuốc rất hiệu quả, diệt sâu nhanh!', 1),
+(2, 'Phân bón tốt, cây xanh tươi', 3),
+(3, 'Sử dụng dễ dàng, hiệu quả cao!', 1),
+(4, 'Giá cả hợp lý, chất lượng đảm bảo', 2);
 
 -- Insert Orders
 INSERT INTO orders (id, date, customer_id) VALUES
@@ -96,5 +96,5 @@ INSERT INTO orders (id, date, customer_id) VALUES
 
 -- Insert Order Lines
 INSERT INTO order_line (id, amount, purchase_price, order_id, product_id) VALUES
-(1, 1, 25000000, 1, 1),
-(2, 2, 6000000, 1, 5);
+(1, 2, 150000, 1, 1),
+(2, 3, 200000, 1, 5);
